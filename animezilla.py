@@ -18,6 +18,24 @@ COMIC_INFOS = [
         'DIR': '[星野竜一]牝妻母豬人妻',
         'ENABLE': False,
     },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2946",
+        'NAME': '[山本同人] TWO PIECE ナミVSアーロン/TWO PIECE 娜美VS惡龍船長 (海賊王)',
+        'DIR': '[山本同人]TWO PIECE 娜美VS惡龍船長 (海賊王)',
+        'ENABLE': False,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1094",
+        'NAME': '[星野竜一] 家庭教師が堕ちるまで/家庭教師她墮落了為止',
+        'DIR': '[星野竜一] 家庭教師她墮落了為止',
+        'ENABLE': False,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3218",
+        'NAME': '[舞六まいむ] 女教師と僕の秘密/女教師與我的秘密',
+        'DIR': '[舞六まいむ] 女教師與我的秘密',
+        'ENABLE': True,
+    },
 ]
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
@@ -60,6 +78,7 @@ for comic in COMIC_INFOS:
         print("creating dir for comic..")
         os.mkdir(comic_dirpath)
 
+    total_page_number = 0
     page_number = 0
     nextpage_url = comic['HOMEPAGE_URL']  # use 1st page as a start
 
@@ -67,6 +86,12 @@ for comic in COMIC_INFOS:
     while (nextpage_url != "") and (nextpage_url is not None):
         page_number += 1
         current_page_url = nextpage_url
+
+        if total_page_number == 0:
+            print("Fetching Home Page...")
+        else:
+            print("({}/{})Fetching Page...".format(
+                page_number, total_page_number), end='')
 
         page_resp = urllib.request.urlopen(current_page_url)
         if (page_resp.status != 200):
@@ -77,7 +102,12 @@ for comic in COMIC_INFOS:
         # Get the HTML Content
         page_html_raw = page_resp.read()  # get the home page html
         page_soup = BeautifulSoup(page_html_raw, 'html.parser')
-        # page_html = page_soup.prettify()
+
+        # Get the total page number
+        if total_page_number == 0:
+            pagenavi_tag = page_soup.find(
+                'div', 'wp-pagenavi').find('a', 'last')
+            total_page_number = int(pagenavi_tag.get('href').split('/')[-1])
 
         # Is this a last page?
         nextpage_tag = page_soup.find('a', 'nextpostslink')
@@ -87,8 +117,9 @@ for comic in COMIC_INFOS:
 
         # Get Image address & Image file name
         img_url = page_soup.find('img', id='comic').get('src')
-        print("Fetching {}..".format(img_url), end='')
-        img_filename = str(page_number)
+        img_filename_remote = img_url.split('/')[-1]
+        img_file_ext = img_filename_remote.split('.')[-1]
+        img_filename = str(page_number) + '.' + img_file_ext
         img_filepath = comic_dirpath + '/' + img_filename
 
         # Check if the file already exists
