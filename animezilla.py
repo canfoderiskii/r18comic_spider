@@ -234,6 +234,72 @@ COMIC_INFOS = [
         'DIR': '[まぐろ帝國] 奴隷妻',
         'ENABLE': True,
     },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2343",
+        'NAME': '[舞六まいむ] 国立人妻学園/國立人妻學園',
+        'DIR': '[舞六まいむ] 國立人妻學園',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/449",
+        'NAME': '[舞六まいむ] お姉様がイかせてあげる',
+        'DIR': '[舞六まいむ] お姉様がイかせてあげる',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1043",
+        'NAME': '[弥美津ヒロ]飼い主様になってよネッ!',
+        'DIR': '[弥美津ヒロ]飼い主様になってよネッ!',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1503",
+        'NAME': '[鈴木あどれす] Love Love Hurricane II (One Piece/海賊王)',
+        'DIR': '[鈴木あどれす] Love Love Hurricane II (One Piece/海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1507",
+        'NAME': '[YU-RI] 蛇姫様ご乱心ですッ!2 (One Piece/海賊王)',
+        'DIR': '[YU-RI] 蛇姫様ご乱心ですッ!2 (One Piece/海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1501",
+        'NAME': '[カーマイン] 海賊王蛇姬被海軍輪著幹 (One Piece/海賊王)',
+        'DIR': '[カーマイン] 海賊王蛇姬被海軍輪著幹 (One Piece/海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1531",
+        'NAME': '[此花] 女殺蛇地獄 (ワンピース/海賊王)',
+        'DIR': '[此花] 女殺蛇地獄 (ワンピース/海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1533",
+        'NAME': '[此花] 続・女殺蛇地獄 (ワンピース/海賊王)',
+        'DIR': '[此花] 続・女殺蛇地獄 (ワンピース/海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1601",
+        'NAME': '[電気将軍] MEROMERO GIRLS 3 (海賊王)',
+        'DIR': '[電気将軍] MEROMERO GIRLS 3 (海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1596",
+        'NAME': '[YU-RI] ナミちゃんとあ・そ・ぼ☆ (海賊王)',
+        'DIR': '[YU-RI] ナミちゃんとあ・そ・ぼ☆ (海賊王)',
+        'ENABLE': True,
+    },
+    {
+        'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2968",
+        'NAME': 'MEROMEROGIRLS2 MUSIWARA GIRLS SIDE/淫魔之子 (海賊王)',
+        'DIR': 'MEROMEROGIRLS2 MUSIWARA GIRLS SIDE 淫魔之子(海賊王)',
+        'ENABLE': True,
+    },
 ]
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
@@ -293,7 +359,20 @@ for comic in COMIC_INFOS:
             print("({}/{})Fetching Page...".format(
                 page_number, total_page_number), end='')
 
-        page_resp = urllib.request.urlopen(current_page_url)
+        # Get the page content with retry
+        retry = 5
+        while retry:
+            try:
+                page_resp = urllib.request.urlopen(current_page_url)
+                if (page_resp.status == 200):
+                    break
+            except urllib.error.HTTPError:
+                retry -= 1
+                if retry:
+                    print("Retry..")
+                    continue
+                else:
+                    raise
         if (page_resp.status != 200):
             print("[ERROR]:Request comic page {}, respcode={}, abort..".format(
                 page_number, page_resp.status))
