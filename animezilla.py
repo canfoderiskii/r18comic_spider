@@ -16,16 +16,11 @@ COMIC_INFOS = [
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3286",
         'NAME': '[星野竜一] 牝妻/母豬人妻',
         'DIR': '[星野竜一]牝妻母豬人妻',
-        'ENABLE': True,
+        'ENABLE': False,
     },
 ]
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
-
-PAGE_REQ_HEADER = {
-    "Referer": current_page_url,
-    "User-Agent": USER_AGENT,
-}
 
 # obtained from Chrome Dev Tools
 img_req_header = {
@@ -67,7 +62,7 @@ for comic in COMIC_INFOS:
 
     page_number = 0
     nextpage_url = comic['HOMEPAGE_URL']  # use 1st page as a start
-    
+
     # Keep working until we find the last page.
     while (nextpage_url != "") and (nextpage_url is not None):
         page_number += 1
@@ -93,7 +88,7 @@ for comic in COMIC_INFOS:
         # Get Image address & Image file name
         img_url = page_soup.find('img', id='comic').get('src')
         print("Fetching {}..".format(img_url), end='')
-        img_filename = img_url.split('/')[-1]
+        img_filename = str(page_number)
         img_filepath = comic_dirpath + '/' + img_filename
 
         # Check if the file already exists
@@ -115,9 +110,10 @@ for comic in COMIC_INFOS:
         print('')
 
         # read & write image content into file
-        print("Saving Img into {}..".format(img_filepath), end='')
+        print("Saving Img into {}..".format(img_filepath))
         img_data = img_resp.read()
-        img_file = open(img_filepath, 'wb')
-        img_file.write(img_data)
-        img_file.close()
-
+        try:
+            with open(img_filepath, 'wb') as img_file:
+                img_file.write(img_data)
+        except Exception as e:
+            print("[ERROR]write file exception:{}".format(e))
