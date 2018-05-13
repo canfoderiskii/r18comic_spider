@@ -1,0 +1,8 @@
+{
+    "python.formatting.provider": "autopep8",
+    "python.formatting.yapfArgs": [],
+    "python.autoComplete.addBrackets": true,
+    "python.jediPath": "E:\\Devel\\Anaconda3\\pkgs\\jedi-0.12.0-py36_1\\Lib\\site-packages\\jedi",
+    "python.linting.pep8Enabled": true,
+    "python.linting.pylintEnabled": true,
+}
