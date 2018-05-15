@@ -82,157 +82,157 @@ COMIC_INFOS = [
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1563",
         'NAME': '[風船クラブ] 母姦獄-惨',
         'DIR': '[風船クラブ] 母姦獄-惨',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3012",
         'NAME': '[さいこ] 半分玩具/半身玩具',
         'DIR': '[さいこ] 半身玩具',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3071",
         'NAME': '[かわもりみさき] 孕ませ！人妻調教師/受孕吧!人妻調教師',
         'DIR': '[かわもりみさき] 受孕吧!人妻調教師',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1735",
         'NAME': '[クラック] NIGHTFLY 夜間飛行 3 (貓眼三姊妹)',
         'DIR': '[クラック] NIGHTFLY 夜間飛行 3 (貓眼三姊妹)',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1729",
         'NAME': '[クラック] 夜間飛行 1 DAY DREAMIN’ (貓眼三姊妹)',
         'DIR': '[クラック] 夜間飛行 1 DAY DREAMIN’ (貓眼三姊妹)',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/951",
         'NAME': '[クラック] 夜間飛行 vol.4 CHAIN of FOOLS (Cat’s Eye/貓眼三姊妹)',
-        'DIR': '[クラック] 夜間飛行 vol.4 CHAIN of FOOLS (Cat’s Eye/貓眼三姊妹)',
-        'ENABLE': True,
+        'DIR': '[クラック] 夜間飛行 vol.4 CHAIN of FOOLS (Cat’s Eye 貓眼三姊妹)',
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1823",
         'NAME': '[風船クラブ] 母姦獄∞ INFINITY',
         'DIR': '[風船クラブ] 母姦獄 INFINITY',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1877",
         'NAME': '[墓場] 公開便所',
         'DIR': '[墓場] 公開便所',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3284",
         'NAME': '[もっちー] 陵辱学園/凌辱學園 (監獄學園)',
         'DIR': '[もっちー] 凌辱學園(監獄學園)',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2971",
         'NAME': '[あちゅむち] 人妻不信～淫欲に堕ちる爆乳/妻不信～淫欲裡墮落的爆乳們～',
         'DIR': '[あちゅむち] 妻不信～淫欲裡墮落的爆乳們～',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1529",
         'NAME': '[唄 飛鳥] 僕の母さんは友人の牝犬/朋友的母親是母犬 ',
         'DIR': '[唄 飛鳥] 朋友的母親是母犬',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1510",
         'NAME': '[沢田大介] 絶対隷母 ',
         'DIR': '[沢田大介] 絶対隷母',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2998",
         'NAME': '[sugarBt] 愛が無くてもエッチは出来る!/即使沒有愛，你也可以做! ',
         'DIR': '[sugarBt] 即使沒有愛，你也可以做!',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/3119",
         'NAME': '[ミサキ闘] 妊婦性活',
         'DIR': '[ミサキ闘] 妊婦性活',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/133",
         'NAME': '[成沢空] 男子便所の古手川さん (ToLOVEる-とらぶる-/出包王女)',
         'DIR': '[成沢空] 男子便所の古手川さん (ToLOVE 出包王女)',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2391",
         'NAME': '[ピンク太郎] 遭毒蟲褻瀆的白百合 白百合に毒蟲',
         'DIR': '[ピンク太郎] 遭毒蟲褻瀆的白百合 白百合に毒蟲',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2393",
         'NAME': '[溝口 ぜらちん] ガクセイ～娼学性奴～/淫蕩學生～娼學性奴',
         'DIR': '[溝口 ぜらちん] 淫蕩學生～娼學性奴',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2436",
         'NAME': '[NABURU] 母娘姦刑',
         'DIR': '[NABURU] 母娘姦刑',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1725",
         'NAME': '[墓場] けだものの家 上/畜牲禽獸之家 上',
-        'DIR': '[墓場] けだものの家 上/畜牲禽獸之家 上',
-        'ENABLE': True,
+        'DIR': '[墓場] 畜牲禽獸之家 上',
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1535",
         'NAME': '[萬蔵] 盗撮コレクター/盜拍材料精題集',
         'DIR': '[萬蔵] 盜拍材料精題集',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1565",
         'NAME': '[秋神サトル] 調教→屈服→肉奴隷',
         'DIR': '[秋神サトル] 調教→屈服→肉奴隷',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/608",
         'NAME': '[舞六まいむ] デリママ～淫らな俺の義母さん～/外約媽媽 淫蕩的我的繼母媽媽',
         'DIR': '[舞六まいむ] 外約媽媽 淫蕩的我的繼母媽媽',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1121",
         'NAME': '[室永叉焼] ハイブリッド通信vol.15 (監獄學園)',
         'DIR': '[室永叉焼] ハイブリッド通信vol.15 (監獄學園)',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/1051",
         'NAME': '[骨太男爵] 女地獄、肉の壺~変態類淫乱科メス豚一代記~/女地獄,地獄肉之壺~',
         'DIR': '[骨太男爵] 女地獄,地獄肉之壺~',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2266",
         'NAME': '[野原ひろみ] 性玩具拘束人形',
         'DIR': '[野原ひろみ] 性玩具拘束人形',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/313",
         'NAME': '[まぐろ帝國] 奴隷妻',
         'DIR': '[まぐろ帝國] 奴隷妻',
-        'ENABLE': True,
+        'ENABLE': False,
     },
     {
         'HOMEPAGE_URL': "http://18h.animezilla.com/manga/2343",
@@ -413,7 +413,20 @@ for comic in COMIC_INFOS:
         img_req_header['Referer'] = current_page_url
         img_req = urllib.request.Request(
             img_url, headers=img_req_header, method='GET')
-        img_resp = urllib.request.urlopen(img_req)
+
+        retry = 5
+        while retry:
+            try:
+                img_resp = urllib.request.urlopen(img_req)
+                if (img_resp.status == 200):
+                    break
+            except urllib.error.HTTPError:
+                retry -= 1
+                if retry:
+                    print("Retry..")
+                    continue
+                else:
+                    raise
         if (img_resp.status != 200):
             print("[ERROR]:Request image, page {}, respcode={}, abort..".format(
                 page_number, page_resp.status))
