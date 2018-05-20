@@ -19,6 +19,216 @@ COMICSITE_HOMEPAGE = "https://nhentai.net"
 
 COMIC_INFOS = [{
     'HOMEPAGE_URL': "https://nhentai.net/g/62579/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/223546/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/224010/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/232943/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/158063/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/141782/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/61781/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/233784/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/230955/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/227442/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/227108/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/232325/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/232324/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/232319/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/232326/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/227288/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/231727/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/217194/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/216547/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/216545/",
+    'ENABLE': False,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/215205/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/211378/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/206449/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/206448/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/206441/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/204617/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/202806/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/193819/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/190922/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/193155/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/192764/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/186944/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/168460/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/188310/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/163050/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/163051/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/163143/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/163047/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/163041/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/157883/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/157239/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/151214/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/151215/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/150989/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/148538/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/143751/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/144365/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/129120/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/126805/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/119714/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/114601/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/113509/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/126523/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/129411/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/107480/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/106597/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/105550/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/105090/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/105085/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/102886/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/92809/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/86861/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/89934/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/84328/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/97175/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/228997/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/224796/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/215671/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/229256/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/230586/",
+    'ENABLE': True,
+}, {
+    'HOMEPAGE_URL': "https://nhentai.net/g/191719/",
     'ENABLE': True,
 }
 ]
@@ -85,6 +295,7 @@ for c in COMIC_INFOS:
     # Homepage is fetched & get the comic information
     homepage_html_raw = homepage_resp.read()
     homepage_soup = BeautifulSoup(homepage_html_raw, 'html.parser')
+    homepage_soup.prettify()  # translate unicode string
 
     info_tag = homepage_soup.find('div', id='info')
     c['NAME_EN'] = info_tag.h1.getText()
@@ -94,6 +305,12 @@ for c in COMIC_INFOS:
 
     # determine downloading directory
     c['DIRNAME'] = c['NAME_EN']  # use the english name only
+    # check & remove invalid character
+    regex_pattern = r'[\\/:|*?<>]'
+    if re.search(regex_pattern, c['DIRNAME']) is not None:
+        c['DIRNAME'] = re.sub(regex_pattern, ' ', c['DIRNAME'])
+        print("[WARN]replaced some invalid chars for dirname {}.."
+            .format(c['DIRNAME']))
     comic_dirpath = CONFIG_OUTDIR + '/' + c['DIRNAME']
     if not os.path.exists(comic_dirpath):
         print("creating dir..")
