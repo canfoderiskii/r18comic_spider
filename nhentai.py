@@ -365,6 +365,15 @@ COMIC_INFOS = [
     {'HOMEPAGE_URL': "https://nhentai.net/g/143709/", 'ENABLE': False, },
     {'HOMEPAGE_URL': "https://nhentai.net/g/200103/", 'ENABLE': False, },
     {'HOMEPAGE_URL': "https://nhentai.net/g/200281/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/239599/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/240180/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/240183/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/172577/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/238478/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/240486/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/232600/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/238735/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/248426/", 'ENABLE': True, },
 ]
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, \
