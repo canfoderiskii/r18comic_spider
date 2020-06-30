@@ -1435,9 +1435,36 @@ COMIC_INFOS = [
     {'HOMEPAGE_URL': "https://nhentai.net/g/158168/", 'ENABLE': False, },
     {'HOMEPAGE_URL': "https://nhentai.net/g/157226/", 'ENABLE': False, },
     {'HOMEPAGE_URL': "https://nhentai.net/g/313216/", 'ENABLE': False, },
-    {'HOMEPAGE_URL': "https://nhentai.net/g/316057/", 'ENABLE': True, },
-    {'HOMEPAGE_URL': "https://nhentai.net/g/315816/", 'ENABLE': True, },
-    {'HOMEPAGE_URL': "https://nhentai.net/g/315886/", 'ENABLE': True, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/316057/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/315816/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/315886/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/317199/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/299216/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/299088/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/309897/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/299068/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/317113/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/317048/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/270946/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/173712/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/292406/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/299853/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/241825/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/228204/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/199239/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/274832/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/315880/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/297054/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/273725/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/316183/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/315945/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/311324/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/316181/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/299791/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/315080/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/166711/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/67605/", 'ENABLE': False, },
+    {'HOMEPAGE_URL': "https://nhentai.net/g/256770/", 'ENABLE': False, },
 ]
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
@@ -1518,8 +1545,8 @@ for c in COMIC_INFOS:
     except AttributeError:
         print("no jp name")
         c['NAME_JP'] = ""
-    c['PAGES'] = int(info_tag.find('div', text=re.compile(
-        'pages')).getText().replace('pages', ''))
+
+    c['PAGES'] = len(homepage_soup.find('div', {"class":'thumbs'}).contents)
 
     # determine downloading directory
     if 'DIRNAME' not in c:
@@ -1597,7 +1624,7 @@ for c in COMIC_INFOS:
         # last page's section class is 'next invisible', so the find() has
         # result as well, but it don't have any link.
         nextpage_tag = page_soup.find(
-            'section', id='pagination-page-top').find('a', 'next')
+            'div', {'class':'reader-pagination'}).find('a', 'next')
         nextpage_rel_url = nextpage_tag.get('href')
         if nextpage_rel_url is not None:
             nextpage_url = COMICSITE_HOMEPAGE + nextpage_rel_url
