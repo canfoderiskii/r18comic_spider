@@ -1,9 +1,9 @@
 {
-    "python.formatting.provider": "autopep8",
-    "python.formatting.yapfArgs": [],
+    "python.formatting.provider": "black",
     "python.autoComplete.addBrackets": true,
-    "python.jediPath": "E:\\Devel\\Anaconda3\\pkgs\\jedi-0.12.0-py36_1\\Lib\\site-packages",
     "python.linting.pycodestyleEnabled": true,
     "python.linting.pylintEnabled": true,
-    "cSpell.enabled": false,
+    "cmake.configureOnOpen": false,
+    "python.analysis.completeFunctionParens": true,
+    "python.pythonPath": "c:\\.app\\anaconda3\\python.exe",
 }
