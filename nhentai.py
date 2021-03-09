@@ -2247,6 +2247,49 @@ COMIC_INFOS = [
     {"HOMEPAGE_URL": "https://nhentai.net/g/348401/", "ENABLE": False,},
     {"HOMEPAGE_URL": "https://nhentai.net/g/348400/", "ENABLE": False,},
     {"HOMEPAGE_URL": "https://nhentai.net/g/348330/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348417/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348495/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348487/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348683/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348715/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348725/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348727/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348737/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348802/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348898/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348900/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348901/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348974/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/349107/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348367/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/329772/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/330988/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/322164/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/321638/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348970/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348724/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348685/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/347550/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/341731/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/315319/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/307142/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348507/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348591/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/348728/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/303290/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/315323/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/341704/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/330391/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/349138/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/349435/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/349231/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/350050/", "ENABLE": False, 'PAGE_START': 34},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/350067/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/322997/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/349957/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/211782/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/327829/", "ENABLE": False,},
+    {"HOMEPAGE_URL": "https://nhentai.net/g/350103/", "ENABLE": False,},
 ]
 # use property like `"PAGE_START": 78` to resume from specified page
 
@@ -2434,6 +2477,7 @@ for c in COMIC_INFOS:
         # Request Image Content
         print("Fetching Image from {}..".format(img_url), end="")
         IMG_REQ_HEADER["Referer"] = current_page_url
+        img_data = bytearray()
 
         retry = URL_RETRY_LIMIT
         while retry:
@@ -2442,8 +2486,9 @@ for c in COMIC_INFOS:
                     img_url, headers=IMG_REQ_HEADER, method="GET"
                 )
                 img_resp = urllib.request.urlopen(img_req)
-                if img_resp.status == 200:
-                    break
+                if img_resp.status != 200:
+                    print("Img Respond != 200, Retry...")
+                    continue
             except (
                 urllib.error.HTTPError,
                 urllib.error.URLError,
@@ -2455,21 +2500,19 @@ for c in COMIC_INFOS:
                     continue
                 else:
                     raise
-            else:
-                break
-        print("")
 
-        # read & write image content into file
-        print("Read HTTP respond..")
+            # request action is completed here.
+            print("")
 
-        retry = URL_RETRY_LIMIT
-        while retry:
+            # read & write image content into file
+            print("Read HTTP respond..")
+
             try:
                 img_data = img_resp.read()
             except http.client.IncompleteRead:
                 retry -= 1
                 if retry:
-                    print("Retry..")
+                    print("Request Again..")
                     continue
                 else:
                     raise
