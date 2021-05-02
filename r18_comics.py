@@ -2398,5 +2398,6 @@ COMIC_INFOS = [
     {"URL": "https://nhentai.net/g/244464/", "SKIP": True,},
     {"URL": "https://nhentai.net/g/280808/", "SKIP": True,},
     {"URL": "https://nhentai.net/g/357170/", "SKIP": True,},
-    {"URL": "https://nhentai.net/g/357171/", "SKIP": False,},
+    {"URL": "https://nhentai.net/g/357171/", "SKIP": True,},
+    {"URL": "https://e-hentai.org/g/1901092/90d1410d1b/", "SKIP": False,},
 ]

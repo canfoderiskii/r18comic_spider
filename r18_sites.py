@@ -273,9 +273,15 @@ class ehentai(Site):
 
     @classmethod
     def comic_page_count(cls, homepage_data: BeautifulSoup) -> int:
-        # format: XX Pages
-        page_count_str = homepage_data.find("td", {"class": "gdt2"}).getText()
-        page_count = len(page_count_str.split(" ")[0])
+        # Target format: XX Pages
+        # find_all() will get us all td elements whose class=gdt2
+        td_list = homepage_data.find_all("td", {'class':'gdt2'})
+        page_count = 0
+
+        for td in td_list:
+            if "page" in td.getText():
+                page_count = int(td.getText().split(" ")[0])
+
         return page_count
 
     # reimplement the version from base class
@@ -303,4 +309,8 @@ def get_class(url: str) -> Union[Site, None]:
     pattern = re.compile(r"nhentai.")
     if pattern.search(url) is not None:
         return nhentai
+
+    if re.search(r'e\-hentai\.', url) is not None:
+        return ehentai
+
     return None
