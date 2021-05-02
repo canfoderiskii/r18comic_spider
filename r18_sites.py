@@ -26,8 +26,7 @@ class Site:
     def homepage(cls) -> tuple:
         """Get all available and supported homepage URLs of current site.
         
-        Returns:
-            tuple: collection of homepage URLs.
+        Returns: collection of homepage URLs.
         """
         raise NotImplementedError("Subclass must implement this")
 
@@ -36,32 +35,67 @@ class Site:
         """Get All available comic's name from its front page.
         
         Args:
-            homepage_data (str): The front page data processed by `BeautifulSoup.prettify()`
+            homepage_data: The homepage data processed by `BeautifulSoup()`
 
-        Returns:
-            list: Comic's name and languange. 
-                Format: {'name': 'str', 'lang': 'en/ch/jp/und'}, {...}
-                    lang: en -> english, ch -> chinese, jp -> japanese, und -> undefined
-                Sequence: main title has higher priority.
+        Returns: Comic's name and languange. 
+            Format: {'name': 'str', 'lang': 'en/ch/jp/und'}, {...}
+                lang: en -> english, ch -> chinese, jp -> japanese, und -> undefined
+            Sequence: main title has higher priority.
         """
         raise NotImplementedError("Subclass must implement this")
 
     @classmethod
     def comic_page_count(cls, homepage_data: BeautifulSoup) -> int:
+        """Get comic total page count.
+
+        Args:
+            homepage_data: The homepage data processed by `BeautifulSoup()`
+
+        Returns: comic total page count.
+        """
         raise NotImplementedError("Subclass must implement this")
 
     @classmethod
     def comic_page_urls(cls, comic_url: str, homepage_data: BeautifulSoup) -> list:
+        """Get comic all pages' URLs.
+        
+        Args:
+            comic_url: The homepage URL of comic.`
+            homepage_data: The homepage data processed by `BeautifulSoup()`
+
+        Returns: comic all pages' URLs.
+        """
         raise NotImplementedError("Subclass must implement this")
 
     @classmethod
     def comic_page_url(
         cls, comic_url: str, page_index: int, homepage_data: BeautifulSoup
     ) -> str:
+        """Get comic page's URL.
+        
+        Args:
+            comic_url: The homepage URL of comic.`
+            page_index: The 0-based comic page index.
+            homepage_data: The homepage data processed by `BeautifulSoup()`
+
+        Returns: The specified comic page's URL.
+        """
         raise NotImplementedError("Subclass must implement this")
 
     @classmethod
     def comic_img_info(cls, page_index: int, page_bs: BeautifulSoup) -> dict:
+        """Get image information in specified comic page.
+        
+        Args:
+            page_index: The 0-based comic page index.
+            page_bs: The image page data processed by `BeautifulSoup()`
+
+        Returns: Comic image's information. 
+            Format: {"url": url, "ext": fileext, "name": filename}
+                url: Image's URL.
+                ext: Image file extension.
+                filename: Image filename(with extension)
+        """
         raise NotImplementedError("Subclass must implement this")
 
 
@@ -76,7 +110,7 @@ class nhentai(Site):
 
     @classmethod
     def homepage(cls) -> tuple:
-        return cls.HOMEPAGES
+        return tuple(cls.HOMEPAGES)
 
     @classmethod
     def comic_names(cls, homepage_data: BeautifulSoup):
