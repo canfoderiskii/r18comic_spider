@@ -2,6 +2,7 @@
 """R18 comic spider core logic, utility, etc..
 """
 # Imports: builtin, 3rd-party, local
+import urllib.request
 import os
 import re
 from bs4 import BeautifulSoup
@@ -22,15 +23,44 @@ def count_downloaded_img(path: str):
 
     return count
 
+
 def get_page_start_index(comics: list) -> int:
     page_index = 0
     if "PAGE_START" in comics:
         # argument checking
         page_num = comics["PAGE_START"]
-        if (page_num < 1):
+        if page_num < 1:
             page_num = 1
             print("[WARN]Start page number invalid, corrected.")
 
         page_index = page_num - 1  # change to 0-based
 
     return page_index
+
+
+def request_parse_url(url: str, user_agent: str, retry_count: int) -> BeautifulSoup:
+    # construct Home Page request
+    page_req = urllib.request.Request(
+        url, headers={"Referer": url, "User-Agent": user_agent,}
+    )
+
+    retry = retry_count
+    while retry:
+        try:
+            page_resp = urllib.request.urlopen(page_req)
+            if page_resp.status == 200:
+                break
+        except urllib.error.HTTPError:
+            retry -= 1
+            if retry:
+                print("Retry..")
+                continue
+            else:
+                raise
+
+    # Parse the page
+    page_html_raw = page_resp.read()
+    page_soup = BeautifulSoup(page_html_raw, "html.parser")
+    page_soup.prettify()  # translate unicode string
+
+    return page_soup
