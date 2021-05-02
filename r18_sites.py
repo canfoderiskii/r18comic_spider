@@ -186,11 +186,17 @@ class ehentai(Site):
         the thumb image page, which is also the front page if the thumb page is
         the first one.
         """
+        count = 0
 
         # use page control table in HTML to calculate.
         t = homepage_data.find("table", {"class": "ptt"})
-        l = t.find_all("td", {"onclick": "document.location=this.firstChild.href"})
-        count = len(l)
+        td = t.find_all("td", {"onclick": "document.location=this.firstChild.href"})
+        elem_count = len(td)
+
+        if elem_count < 1:  # single thumb page
+            count = 1
+        else:  # multiple thumb pages
+            count = elem_count
         return count
 
     @classmethod
@@ -275,7 +281,7 @@ class ehentai(Site):
     def comic_page_count(cls, homepage_data: BeautifulSoup) -> int:
         # Target format: XX Pages
         # find_all() will get us all td elements whose class=gdt2
-        td_list = homepage_data.find_all("td", {'class':'gdt2'})
+        td_list = homepage_data.find_all("td", {"class": "gdt2"})
         page_count = 0
 
         for td in td_list:
@@ -310,7 +316,7 @@ def get_class(url: str) -> Union[Site, None]:
     if pattern.search(url) is not None:
         return nhentai
 
-    if re.search(r'e\-hentai\.', url) is not None:
+    if re.search(r"e\-hentai\.", url) is not None:
         return ehentai
 
     return None

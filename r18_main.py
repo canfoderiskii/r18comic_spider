@@ -74,6 +74,10 @@ for c in comics.COMIC_INFOS:
         print("[ERR]site class not found, abort")
         break
 
+    # init site class
+    site.UrlReqRetryCount = URL_RETRY_LIMIT
+    site.UserAgent = USER_AGENT
+
     # open & parse Home page
     homepage_soup = core.request_parse_url(comic_url, USER_AGENT, URL_RETRY_LIMIT)
 
