@@ -39,11 +39,12 @@ def get_page_start_index(comics: list) -> int:
 
 
 def request_parse_url(url: str, user_agent: str, retry_count: int) -> BeautifulSoup:
-    # construct Home Page request
+    # construct page request
     page_req = urllib.request.Request(
         url, headers={"Referer": url, "User-Agent": user_agent,}
     )
 
+    # open target URL
     retry = retry_count
     while retry:
         try:
@@ -56,7 +57,7 @@ def request_parse_url(url: str, user_agent: str, retry_count: int) -> BeautifulS
                 print("Retry..")
                 continue
             else:
-                raise
+                raise  # if error, raise directly to abort program.
 
     # Parse the page
     page_html_raw = page_resp.read()

@@ -74,30 +74,8 @@ for c in comics.COMIC_INFOS:
         print("[ERR]site class not found, abort")
         break
 
-    # construct Home Page request
-    homepage_req = urllib.request.Request(
-        comic_url, headers={"Referer": comic_url, "User-Agent": USER_AGENT,}
-    )
-
-    # Fetch the homepage
-    retry = URL_RETRY_LIMIT
-    while retry:
-        try:
-            homepage_resp = urllib.request.urlopen(homepage_req)
-            if homepage_resp.status == 200:
-                break
-        except urllib.error.HTTPError:
-            retry -= 1
-            if retry:
-                print("Retry..")
-                continue
-            else:
-                raise
-
-    # Homepage is fetched & get the comic information
-    homepage_html_raw = homepage_resp.read()
-    homepage_soup = BeautifulSoup(homepage_html_raw, "html.parser")
-    homepage_soup.prettify()  # translate unicode string
+    # open & parse Home page
+    homepage_soup = core.request_parse_url(comic_url, USER_AGENT, URL_RETRY_LIMIT)
 
     # Find Comic Nmae
     comic_names = site.comic_names(homepage_soup)
@@ -156,34 +134,8 @@ for c in comics.COMIC_INFOS:
         # Get current comic page URL
         page_url = page_urls[page_index]
 
-        retry = URL_RETRY_LIMIT
-        while retry:
-            try:
-                page_req = urllib.request.Request(
-                    page_url, headers={"Referer": page_url, "User-Agent": USER_AGENT,},
-                )
-
-                # Get the page content
-                page_resp = urllib.request.urlopen(page_req)
-                if page_resp.status == 200:
-                    break
-            except (
-                urllib.error.HTTPError,
-                urllib.error.URLError,
-                ConnectionResetError,
-            ):
-                retry -= 1
-                if retry:
-                    print("Retry..")
-                    continue
-                else:
-                    raise
-            else:
-                break
-
-        # Get the HTML Content & Necessary Info
-        page_html_raw = page_resp.read()  # get the home page html
-        page_soup = BeautifulSoup(page_html_raw, "html.parser")
+        # open & parse image page
+        page_soup = core.request_parse_url(page_url, USER_AGENT, URL_RETRY_LIMIT)
 
         img_info = site.comic_img_info(page_index, page_soup)
         img_url = img_info["url"]
