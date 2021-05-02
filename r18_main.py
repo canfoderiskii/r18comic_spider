@@ -13,16 +13,17 @@ import json
 import fnmatch
 import http.client
 from bs4 import BeautifulSoup
+
 # local imports
 import r18_comics as comics
 import r18_sites as sites
 import r18_core as core
 
-CONFIG_OUTDIR = "download" # Downloader output directory
+CONFIG_OUTDIR = "download"  # Downloader output directory
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
 
-URL_RETRY_LIMIT = 20 # Retry Max Count
+URL_RETRY_LIMIT = 20  # Retry Max Count
 
 # obtained from Chrome Dev Tools
 # "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
@@ -69,7 +70,7 @@ for c in comics.COMIC_INFOS:
 
     # Get correct comic site process class.
     site = sites.get_class(comic_url)
-    if (site is None):
+    if site is None:
         print("[ERR]site class not found, abort")
         break
 
@@ -100,15 +101,15 @@ for c in comics.COMIC_INFOS:
 
     # Find Comic Nmae
     comic_names = site.comic_names(homepage_soup)
-    if (len(comic_names) < 1):
+    if len(comic_names) < 1:
         print("[ERR]No name is found, abort.")
         break
-    
+
     # Find comic total page count
     comic_page_count = site.comic_page_count(homepage_soup)
 
     # Comic downloading dir: use 1st comic name as default dir name
-    comic_dirname = comic_names[0]['name']
+    comic_dirname = comic_names[0]["name"]
     # Get rid of invalid OS path characters
     # NOTE: successive dots(.) shall be deleted, or path is erroneous on Windows.
     regex_pattern = r'([\\/:|*?<>,"])|(\.+)'
@@ -118,7 +119,7 @@ for c in comics.COMIC_INFOS:
     comic_dirpath = CONFIG_OUTDIR + "/" + comic_dirname
     if not os.path.exists(comic_dirpath):
         print("creating dir..")
-        os.mkdir(comic_dirpath)  
+        os.mkdir(comic_dirpath)
 
     # Count downloaded images.
     downloaded_imgcount = core.count_downloaded_img(comic_dirpath)
@@ -128,13 +129,13 @@ for c in comics.COMIC_INFOS:
 
     # Save Comic infomation into a dedicated file
     comic_localinfo = {
-        "Name1": comic_names[0]['name'],
+        "Name1": comic_names[0]["name"],
         "Pages": str(comic_page_count),
         "Src": comic_url,
         "UpdateTime": str(datetime.datetime.now()),
     }
-    if (len(comic_names) > 1):
-        comic_localinfo['Name2'] = comic_names[1]['name']
+    if len(comic_names) > 1:
+        comic_localinfo["Name2"] = comic_names[1]["name"]
     comic_localinfo_filepath = comic_dirpath + "/info.json"
     with open(comic_localinfo_filepath, "w", encoding="utf-8") as f:
         f.write(json.dumps(comic_localinfo, sort_keys=True, indent=2))
@@ -142,16 +143,16 @@ for c in comics.COMIC_INFOS:
     # Fetch all pages' URLs
     page_urls = site.comic_page_urls(comic_url, homepage_soup)
 
-    print("") # new line
+    print("")  # new line
 
     # Select start page
     page_start_index = core.get_page_start_index(c)
 
     # Keep working until we find the last page.
     for page_index in range(page_start_index, comic_page_count):
-        page_num = page_index + 1 # page number, 1-based
+        page_num = page_index + 1  # page number, 1-based
         print("({}/{})Fetching Page...".format(page_num, comic_page_count), end="")
-        
+
         # Get current comic page URL
         page_url = page_urls[page_index]
 
@@ -159,8 +160,7 @@ for c in comics.COMIC_INFOS:
         while retry:
             try:
                 page_req = urllib.request.Request(
-                    page_url,
-                    headers={"Referer": page_url, "User-Agent": USER_AGENT,},
+                    page_url, headers={"Referer": page_url, "User-Agent": USER_AGENT,},
                 )
 
                 # Get the page content
@@ -186,8 +186,8 @@ for c in comics.COMIC_INFOS:
         page_soup = BeautifulSoup(page_html_raw, "html.parser")
 
         img_info = site.comic_img_info(page_index, page_soup)
-        img_url = img_info['url']
-        img_filepath = comic_dirpath + "/" + img_info['name']
+        img_url = img_info["url"]
+        img_filepath = comic_dirpath + "/" + img_info["name"]
 
         # Check if the file already exists
         if os.path.exists(img_filepath):
