@@ -28,11 +28,12 @@ URL_RETRY_LIMIT = 20  # Retry Max Count
 # obtained from Chrome Dev Tools
 # "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
 IMG_REQ_HEADER = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/*,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
     "Cache-Control": "max-age=0",
     # "Cookie": "__cfduid=d5502268083fd2569821ec4c403893df91572661861",
+    "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
     # "Pragma": "no-cache",
@@ -97,7 +98,7 @@ for c in comics.COMIC_INFOS:
     regex_pattern = r'([\\/:|*?<>,"])|(\.+)'
     if re.search(regex_pattern, comic_dirname) is not None:
         comic_dirname = re.sub(regex_pattern, "", comic_dirname)
-        print("[WARN]replaced invalid chars, new dirname: {}..".format(comic_dirname))
+        print("[WARN]replaced invalid chars, new dirname: {}".format(comic_dirname))
     comic_dirpath = CONFIG_OUTDIR + "/" + comic_dirname
     if not os.path.exists(comic_dirpath):
         print("creating dir..")
