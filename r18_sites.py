@@ -22,8 +22,20 @@ class Site:
     This class is designed as an abstract class, for define a common interface for different sites.
     """
 
-    UrlReqRetryCount = 10
-    UserAgent = ""
+    # URL requset retry count on error.
+    url_req_retrycount = 10
+
+    # Page URL request header, for urllib.
+    # NOTE: some site subclass needs this to be initialized.
+    #
+    # Format Example: {
+    #     "Accept": str,
+    #     "Accept-Encoding": str,
+    #     "Accept-Language": str,
+    #     "Referer": str,
+    #     "User-Agent": str,
+    # }
+    url_page_reqhdr = dict()
 
     def __init__(self) -> None:
         pass
@@ -170,6 +182,9 @@ class ehentai(Site):
     - Thumb page 2 URL: https://e-hentai.org/g/1901092/90d1410d1b/?p=1
     - Image Page URL: https://e-hentai.org/s/SomeKindHash/1901092-{IMG}
     - Image URL: get from Image Page.
+
+    Some comic page has a warning page before into comic homepage, so a mouse click
+    simulation is needed.
     """
 
     HOMEPAGES = "https://e-hentai.org"
@@ -179,12 +194,22 @@ class ehentai(Site):
         super.__init__()
 
     @classmethod
+    def _warnpage_is_provided(cls, homepage_data: BeautifulSoup) -> bool:
+        # TODO: click simulation.
+        return False
+
+    @classmethod
     def _thumb_page_count(cls, homepage_data: BeautifulSoup) -> int:
         """Get thumb images page count.
 
         NOTE: Image page URLs are not sequenced. I need to collect the info from
         the thumb image page, which is also the front page if the thumb page is
         the first one.
+
+        Args:
+            homepage_data: The homepage data processed by `BeautifulSoup()`
+
+        Returns: Thumb page count.
         """
         count = 0
 
@@ -202,7 +227,10 @@ class ehentai(Site):
     @classmethod
     def _thumb_page_1st_img_index(cls, thumbpage_data: BeautifulSoup) -> int:
         """Get first image index from current specified thumb page.
-         
+
+        Args:
+            homepage_data: The homepage data processed by `BeautifulSoup()`
+
         Returns: 1st image 0-based index of current thumb page.
         """
         imgpage_1st_url = (
@@ -213,19 +241,35 @@ class ehentai(Site):
 
     @classmethod
     def _thumb_page_img_count(cls, thumbpage_data: BeautifulSoup) -> int:
-        """Get the count of thumb images from current thumb page."""
+        """Get the count of thumb images from current thumb page.
+        
+        Returns: (thumb) image count contained by current thumb page.
+        """
         return len(
             thumbpage_data.find("div", id="gdt").find_all("div", {"class": "gdtm"})
         )
 
     @classmethod
     def _thumb_page_url(cls, comic_url: str, page_index: int) -> str:
+        """Get thumb page URL, simply according to index and homepage.
+        
+        Returns: Thumb page URL.
+        """
         if page_index < 1:
             return comic_url
         return comic_url + "?p=" + str(page_index)
 
     @classmethod
     def _thumb_page_imgpage_urls(cls, thumbpage_data: BeautifulSoup) -> list:
+        """Get all image pages' URLs from current thumb page .
+
+        Args:
+            thumbpage_data: page data processed by `BeautifulSoup()`
+
+        Returns:
+            list: collection of image URLs.
+        """
+
         # all elements with link
         elems = thumbpage_data.find("div", id="gdt").find_all("a")
         urls_list = []
@@ -237,29 +281,32 @@ class ehentai(Site):
         return urls_list
 
     @classmethod
-    def _img_page_infos(
-        cls,
-        comic_url: str,
-        retry_count: int,
-        user_agent: str,
-        homepage_data: BeautifulSoup,
-    ) -> tuple:
+    def _img_page_infos(cls, comic_url: str, homepage_data: BeautifulSoup) -> tuple:
+        """Get image pages' information
+
+        Args:
+            comic_url (str): Comic home page URL.
+            homepage_data (BeautifulSoup): processed HomePage.
+
+        Returns:
+            tuple: image page infomation. 
+                [0]: list, each element is image count per thumb page.
+                [1]: list, all images' URLs of comic.
+        """        
         thumb_pages = cls._thumb_page_count(homepage_data)
         imgcount_per_thumbpage = []
         thumbpage_imgurls = []
 
         for i in range(thumb_pages):
             thumbpage_url = cls._thumb_page_url(comic_url, i)
-            page_bs = core.request_parse_url(thumbpage_url, user_agent, retry_count)
+            page_bs = core.request_parse_url(
+                thumbpage_url, cls.url_page_reqhdr, cls.url_req_retrycount
+            )
 
             imgcount_per_thumbpage.append(cls._thumb_page_img_count(page_bs))
             thumbpage_imgurls += cls._thumb_page_imgpage_urls(page_bs)
 
         return (imgcount_per_thumbpage, thumbpage_imgurls)
-
-    @classmethod
-    def homepage(cls) -> tuple:
-        return tuple(cls.HOMEPAGES)
 
     @classmethod
     def comic_names(cls, homepage_data: BeautifulSoup):
@@ -293,9 +340,7 @@ class ehentai(Site):
     # reimplement the version from base class
     @classmethod
     def comic_page_urls(cls, comic_url: str, homepage_data: BeautifulSoup) -> list:
-        dummy, urls_list = cls._img_page_infos(
-            comic_url, cls.UrlReqRetryCount, cls.UserAgent, homepage_data
-        )
+        dummy, urls_list = cls._img_page_infos(comic_url, homepage_data)
         return urls_list
 
     @classmethod

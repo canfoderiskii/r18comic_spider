@@ -26,18 +26,30 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 URL_RETRY_LIMIT = 20  # Retry Max Count
 
 # obtained from Chrome Dev Tools
-# "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
+PAGE_REQ_HEADER = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
+    "Cache-Control": "max-age=0",
+    # "Cookie": "__cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1",
+    "Connection": "keep-alive",
+    "DNT": "1",
+    # "upgrade-insecure-requests": "1",
+    # "Pragma": "no-cache",
+    "Referer": "",  # ADD RUNTIME
+    "User-Agent": USER_AGENT,
+}
 IMG_REQ_HEADER = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/*,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
     "Cache-Control": "max-age=0",
-    # "Cookie": "__cfduid=d5502268083fd2569821ec4c403893df91572661861",
+    # "Cookie": "__cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1",
     "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
     # "Pragma": "no-cache",
-    "Referer": "TO BE ADDED RUNTIME",
+    "Referer": "",  # ADD RUNTIME
     "User-Agent": USER_AGENT,
 }
 
@@ -76,11 +88,12 @@ for c in comics.COMIC_INFOS:
         break
 
     # init site class
-    site.UrlReqRetryCount = URL_RETRY_LIMIT
-    site.UserAgent = USER_AGENT
+    site.url_req_retrycount = URL_RETRY_LIMIT
+    site.url_page_reqhdr = PAGE_REQ_HEADER
 
     # open & parse Home page
-    homepage_soup = core.request_parse_url(comic_url, USER_AGENT, URL_RETRY_LIMIT)
+    homepage_soup = core.request_parse_url(comic_url, PAGE_REQ_HEADER, URL_RETRY_LIMIT)
+    print(homepage_soup)
 
     # Find Comic Nmae
     comic_names = site.comic_names(homepage_soup)
@@ -140,7 +153,7 @@ for c in comics.COMIC_INFOS:
         page_url = page_urls[page_index]
 
         # open & parse image page
-        page_soup = core.request_parse_url(page_url, USER_AGENT, URL_RETRY_LIMIT)
+        page_soup = core.request_parse_url(page_url, IMG_REQ_HEADER, URL_RETRY_LIMIT)
 
         img_info = site.comic_img_info(page_index, page_soup)
         img_url = img_info["url"]

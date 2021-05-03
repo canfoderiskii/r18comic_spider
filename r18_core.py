@@ -38,10 +38,18 @@ def get_page_start_index(comics: list) -> int:
     return page_index
 
 
-def request_parse_url(url: str, user_agent: str, retry_count: int) -> BeautifulSoup:
+def request_parse_url(url: str, reqhdr: dict, retry_count: int) -> BeautifulSoup:
+    # prepare request header. Do copy because we do some runtime tweaks here.
+    reqhdr_r = reqhdr.copy()
+    reqhdr_r["Referer"] = url
+
     # construct page request
+    # FIXME: if `PAGE_REQ_HEADER` is used as a whole in `request_parse_url()`,
+    # e-hentai page cannot be accessed & decoded normally.
+
+    # page_req = urllib.request.Request(url, headers=reqhdr_r)
     page_req = urllib.request.Request(
-        url, headers={"Referer": url, "User-Agent": user_agent,}
+        url, headers={"Referer": url, "User-Agent": reqhdr_r["User-Agent"],}
     )
 
     # open target URL
