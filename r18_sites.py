@@ -47,6 +47,30 @@ class Site:
         return {"url": img_url, "ext": fileext, "name": filename}
 
     @classmethod
+    def comic_page_open(cls, url: str) -> BeautifulSoup:
+        """Open comic home page.
+
+        Args:
+            url (str): Comic HomePage URL.
+
+        Returns:
+            BeautifulSoup: processed homepage data.
+        """
+
+        # NOTE: if `PAGE_REQ_HEADER` is used as a whole in `request_parse_url()`,
+        # e-hentai page cannot be accessed & decoded normally.
+        page_bs = core.request_parse_url(
+            url,
+            {
+                "Referer": url,
+                "User-Agent": cls.url_page_reqhdr["User-Agent"],
+                "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+            },
+            cls.url_req_retrycount,
+        )
+        return page_bs
+
+    @classmethod
     def comic_names(cls, homepage_data: BeautifulSoup) -> list:
         """Get All available comic's name from its front page.
         
@@ -133,7 +157,7 @@ class nhentai(Site):
         super.__init__()
 
     @classmethod
-    def comic_names(cls, homepage_data: BeautifulSoup):
+    def comic_names(cls, homepage_data: BeautifulSoup) -> list:
         ret = []
         info_tag = homepage_data.find("div", id="info")
 
@@ -195,7 +219,9 @@ class ehentai(Site):
 
     @classmethod
     def _warnpage_is_provided(cls, homepage_data: BeautifulSoup) -> bool:
-        # TODO: click simulation.
+        s = str(homepage_data)
+        if "Warning" in s:  # Full title: Content Warning
+            return True
         return False
 
     @classmethod
@@ -292,7 +318,7 @@ class ehentai(Site):
             tuple: image page infomation. 
                 [0]: list, each element is image count per thumb page.
                 [1]: list, all images' URLs of comic.
-        """        
+        """
         thumb_pages = cls._thumb_page_count(homepage_data)
         imgcount_per_thumbpage = []
         thumbpage_imgurls = []
@@ -300,7 +326,13 @@ class ehentai(Site):
         for i in range(thumb_pages):
             thumbpage_url = cls._thumb_page_url(comic_url, i)
             page_bs = core.request_parse_url(
-                thumbpage_url, cls.url_page_reqhdr, cls.url_req_retrycount
+                thumbpage_url,
+                {
+                    "Referer": thumbpage_url,
+                    "User-Agent": cls.url_page_reqhdr["User-Agent"],
+                    "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+                },
+                cls.url_req_retrycount,
             )
 
             imgcount_per_thumbpage.append(cls._thumb_page_img_count(page_bs))
@@ -309,7 +341,17 @@ class ehentai(Site):
         return (imgcount_per_thumbpage, thumbpage_imgurls)
 
     @classmethod
-    def comic_names(cls, homepage_data: BeautifulSoup):
+    def comic_page_open(cls, url: str) -> BeautifulSoup:
+        # replemented version
+
+        page_bs = super().comic_page_open(url)  # open homepage
+        if cls._warnpage_is_provided(page_bs):  # not homepage, but a warning page
+            page_bs = super().comic_page_open(url + "?nw=always")  # open real homepage
+
+        return page_bs
+
+    @classmethod
+    def comic_names(cls, homepage_data: BeautifulSoup) -> list:
         ret = []
         info_tag = homepage_data.find("div", id="gd2")
 

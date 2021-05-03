@@ -2412,7 +2412,7 @@ COMIC_INFOS = [
     {"URL": "https://e-hentai.org/g/384641/a3f0f26a09/", "SKIP": True,},
     {"URL": "https://e-hentai.org/g/389110/92887abb4f/", "SKIP": True,},
     {"URL": "https://e-hentai.org/g/397804/e8485396b5/", "SKIP": True,},
-    {"URL": "https://e-hentai.org/g/1900850/f9f4b2740c/", "SKIP": False,}, # need retry
+    {"URL": "https://e-hentai.org/g/1900850/f9f4b2740c/", "SKIP": False,}, # test warning page process
     {"URL": "https://e-hentai.org/g/1900819/088b0a908d/", "SKIP": True,},
     # {"URL": "", "SKIP": False, },
     # {"URL": "", "SKIP": False, 'PAGE_START': 30 },

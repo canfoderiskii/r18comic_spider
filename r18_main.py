@@ -44,7 +44,7 @@ IMG_REQ_HEADER = {
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
     "Cache-Control": "max-age=0",
-    # "Cookie": "__cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1",
+    "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
     "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
@@ -92,8 +92,9 @@ for c in comics.COMIC_INFOS:
     site.url_page_reqhdr = PAGE_REQ_HEADER
 
     # open & parse Home page
-    homepage_soup = core.request_parse_url(comic_url, PAGE_REQ_HEADER, URL_RETRY_LIMIT)
-    print(homepage_soup)
+    homepage_soup = site.comic_page_open(comic_url)
+    # print(homepage_soup)
+    # homepage_soup = core.request_parse_url(comic_url, PAGE_REQ_HEADER, URL_RETRY_LIMIT)
 
     # Find Comic Nmae
     comic_names = site.comic_names(homepage_soup)
@@ -153,7 +154,17 @@ for c in comics.COMIC_INFOS:
         page_url = page_urls[page_index]
 
         # open & parse image page
-        page_soup = core.request_parse_url(page_url, IMG_REQ_HEADER, URL_RETRY_LIMIT)
+        # page_soup = core.request_parse_url(page_url, IMG_REQ_HEADER, URL_RETRY_LIMIT)
+        page_soup = core.request_parse_url(
+            page_url,
+            {
+                "Referer": page_url,
+                "User-Agent": USER_AGENT,
+                "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+            },
+            URL_RETRY_LIMIT,
+        )
+        print(page_soup)
 
         img_info = site.comic_img_info(page_index, page_soup)
         img_url = img_info["url"]
