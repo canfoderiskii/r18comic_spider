@@ -247,7 +247,10 @@ class ehentai(Site):
         if elem_count < 1:  # single thumb page
             count = 1
         else:  # multiple thumb pages
-            count = elem_count
+            # The button left of '>' is the last thumb page. And the element's
+            # text content is the last page number (1-based), which is also the
+            # thumb page count.
+            count = int(td[-2].get_text())
         return count
 
     @classmethod
