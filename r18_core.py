@@ -5,6 +5,7 @@
 import urllib.request
 import os
 import re
+import http.client
 from bs4 import BeautifulSoup
 
 # Module authorshipt information
@@ -56,7 +57,11 @@ def request_parse_url(url: str, reqhdr: dict, retry_count: int) -> BeautifulSoup
             page_resp = urllib.request.urlopen(page_req)
             if page_resp.status == 200:
                 break
-        except urllib.error.HTTPError:
+        except (
+            urllib.error.HTTPError,
+            urllib.error.URLError,
+            http.client.RemoteDisconnected
+        ):
             retry -= 1
             if retry:
                 print("Retry..")

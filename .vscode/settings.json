@@ -5,5 +5,5 @@
     "python.linting.pylintEnabled": true,
     "cmake.configureOnOpen": false,
     "python.analysis.completeFunctionParens": true,
-    "python.pythonPath": "C:\\.app\\Anaconda3\\python.exe",
+    "python.pythonPath": "D:\\.app\\Anaconda3\\python.exe",
 }

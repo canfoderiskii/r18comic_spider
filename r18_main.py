@@ -44,7 +44,7 @@ IMG_REQ_HEADER = {
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
     "Cache-Control": "max-age=0",
-    "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+    # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
     "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
@@ -139,6 +139,19 @@ for c in comics.COMIC_INFOS:
 
     # Fetch all pages' URLs
     page_urls = site.comic_page_urls(comic_url, homepage_soup)
+    # retry = URL_RETRY_LIMIT
+    # while retry:
+    #     try:
+    #         page_urls = site.comic_page_urls(comic_url, homepage_soup)
+    #     except (
+    #         http.client.RemoteDisconnected
+    #     ):
+    #         retry -= 1
+    #         if retry:
+    #             print("Retry..")
+    #             continue
+    #         else:
+    #             raise
 
     print("")  # new line
 
@@ -160,11 +173,11 @@ for c in comics.COMIC_INFOS:
             {
                 "Referer": page_url,
                 "User-Agent": USER_AGENT,
-                "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+                # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
             },
             URL_RETRY_LIMIT,
         )
-        print(page_soup)
+        # print(page_soup)
 
         img_info = site.comic_img_info(page_index, page_soup)
         img_url = img_info["url"]
