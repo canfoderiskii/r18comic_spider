@@ -32,24 +32,28 @@ PAGE_REQ_HEADER = {
     "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
     "Cache-Control": "max-age=0",
     # "Cookie": "__cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1",
-    "Connection": "keep-alive",
-    "DNT": "1",
-    # "upgrade-insecure-requests": "1",
-    # "Pragma": "no-cache",
-    "Referer": "",  # ADD RUNTIME
-    "User-Agent": USER_AGENT,
-}
-IMG_REQ_HEADER = {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/*,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
-    "Cache-Control": "max-age=0",
-    # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+    "Cookie": "skipserver=36477-18910_31269-18907_30703-18907; nw=1; tagaccept=1",
     "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
     # "Pragma": "no-cache",
     "Referer": "",  # ADD RUNTIME
+    "User-Agent": USER_AGENT,
+}
+IMG_REQ_HEADER = {
+    "Accept": "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6",
+    #"Cache-Control": "max-age=0",
+    # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+    "Connection": "keep-alive",
+    "DNT": "1",
+    #"upgrade-insecure-requests": "1",
+    # "Pragma": "no-cache",
+    "Referer": "",  # ADD RUNTIME
+    "Sec-Fetch-Dest": "image",
+    "Sec-Fetch-Mode": "no-cors",
+    "Sec-Fetch-Site": "cross-site",
     "User-Agent": USER_AGENT,
 }
 
@@ -190,7 +194,11 @@ for c in comics.COMIC_INFOS:
         print("")
 
         # Request Image Content
-        print("Fetching Image from {}..".format(img_url), end="")
+        print("Fetching Image from {} ..".format(img_url), end="")
+
+        img_url = re.sub(r'rrzqfpd.htslkehxkeyu.hath.network:36477', r'ysseijd.nzgnffqhdzwz.hath.network:23398', img_url)
+
+        print("Fetching Image from {} ..".format(img_url), end="")
         IMG_REQ_HEADER["Referer"] = page_url
         img_data = bytearray()
 
@@ -198,7 +206,7 @@ for c in comics.COMIC_INFOS:
         while retry:
             try:
                 img_req = urllib.request.Request(
-                    img_url, headers=IMG_REQ_HEADER, method="GET"
+                    img_url, headers=IMG_REQ_HEADER, method="GET",
                 )
                 img_resp = urllib.request.urlopen(img_req)
                 if img_resp.status != 200:

@@ -64,7 +64,7 @@ class Site:
             {
                 "Referer": url,
                 "User-Agent": cls.url_page_reqhdr["User-Agent"],
-                "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+                # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
             },
             cls.url_req_retrycount,
         )
@@ -333,7 +333,7 @@ class ehentai(Site):
                 {
                     "Referer": thumbpage_url,
                     "User-Agent": cls.url_page_reqhdr["User-Agent"],
-                    "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
+                    # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
                 },
                 cls.url_req_retrycount,
             )
@@ -397,6 +397,12 @@ class ehentai(Site):
     @classmethod
     def comic_img_info(cls, page_index: int, page_bs: BeautifulSoup) -> dict:
         url = page_bs.find("div", id="i3").a.img.get("src")
+        
+        # 检查是否达到了每日阅览限制
+        # NOTE: 此时加载图片会是一个固定 gif 图。
+        if url == "https://ehgt.org/g/509.gif":
+            raise
+
         return cls._img_url2info(url, page_index)
 
 
