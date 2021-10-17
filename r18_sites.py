@@ -1,10 +1,10 @@
 """R18 comic spider supportted sites information module.
 """
 # Imports: builtin, 3rd-party, local
-import enum
-import typing
 import re
+import time
 from typing import Union
+import requests
 from bs4 import BeautifulSoup
 
 # local imports
@@ -22,20 +22,31 @@ class Site:
     This class is designed as an abstract class, for define a common interface for different sites.
     """
 
-    # URL requset retry count on error.
-    url_req_retrycount = 10
+    url_req_retrycount = 5
+    """URL requset retry count on error."""
 
-    # Page URL request header, for urllib.
-    # NOTE: some site subclass needs this to be initialized.
-    #
-    # Format Example: {
-    #     "Accept": str,
-    #     "Accept-Encoding": str,
-    #     "Accept-Language": str,
-    #     "Referer": str,
-    #     "User-Agent": str,
-    # }
-    url_page_reqhdr = dict()
+    reqhdr_page = dict()
+    """Request header for page.
+
+    NOTE: some site subclass needs this to be initialized.
+
+    Format Example: {
+        "Accept": str,
+        "Accept-Encoding": str,
+        "Accept-Language": str,
+        "Referer": str,
+        "User-Agent": str,
+    }
+    """
+
+    reqhdr_image = dict()
+    """Request header for image."""
+
+    s: requests.Session = None
+    """Request session for requests module."""
+
+    prepreq: requests.PreparedRequest = None
+    """NOT USED"""
 
     def __init__(self) -> None:
         pass
@@ -51,22 +62,15 @@ class Site:
         """Open comic home page.
 
         Args:
-            url (str): Comic HomePage URL.
+            url: Comic HomePage URL.
 
-        Returns:
-            BeautifulSoup: processed homepage data.
+        Returns: processed homepage data.
         """
 
         # NOTE: if `PAGE_REQ_HEADER` is used as a whole in `request_parse_url()`,
         # e-hentai page cannot be accessed & decoded normally.
         page_bs = core.request_parse_url(
-            url,
-            {
-                "Referer": url,
-                "User-Agent": cls.url_page_reqhdr["User-Agent"],
-                # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
-            },
-            cls.url_req_retrycount,
+            cls.s, cls.reqhdr_page, url, cls.url_req_retrycount,
         )
         return page_bs
 
@@ -329,14 +333,9 @@ class ehentai(Site):
         for i in range(thumb_pages):
             thumbpage_url = cls._thumb_page_url(comic_url, i)
             page_bs = core.request_parse_url(
-                thumbpage_url,
-                {
-                    "Referer": thumbpage_url,
-                    "User-Agent": cls.url_page_reqhdr["User-Agent"],
-                    # "Cookie": "nw=1; __cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1; tagaccept=1",
-                },
-                cls.url_req_retrycount,
+                cls.s, cls.reqhdr_image, thumbpage_url, cls.url_req_retrycount,
             )
+            time.sleep(0.1)
 
             imgcount_per_thumbpage.append(cls._thumb_page_img_count(page_bs))
             thumbpage_imgurls += cls._thumb_page_imgpage_urls(page_bs)
@@ -397,11 +396,11 @@ class ehentai(Site):
     @classmethod
     def comic_img_info(cls, page_index: int, page_bs: BeautifulSoup) -> dict:
         url = page_bs.find("div", id="i3").a.img.get("src")
-        
+
         # 检查是否达到了每日阅览限制
         # NOTE: 此时加载图片会是一个固定 gif 图。
         if url == "https://ehgt.org/g/509.gif":
-            raise
+            raise Exception("Daily limits has reached!")
 
         return cls._img_url2info(url, page_index)
 
