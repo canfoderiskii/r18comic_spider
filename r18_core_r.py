@@ -2,10 +2,9 @@
 """R18 comic spider core logic, utility, etc..
 """
 # Imports: builtin, 3rd-party, local
-import urllib.request
 import os
 import re
-import http.client
+import requests
 from bs4 import BeautifulSoup
 
 # Module authorshipt information
@@ -39,39 +38,41 @@ def get_page_start_index(comics: list) -> int:
     return page_index
 
 
-def request_parse_url(url: str, reqhdr: dict, retry_count: int) -> BeautifulSoup:
+def request_parse_url(
+    s: requests.Session, reqhdr: dict, url: str, retry_count: int
+) -> BeautifulSoup:
+    """Send request to URL, get reponse, parse HTML using BS4.
+
+    Args:
+        s: Connection session with prepared request class.
+        preqreq: Prepared request data.
+        url: URL. (NOT USED)
+        retry_count: retry count.
+
+    Returns: parsed reponse HTML data.
+    """
+
     # prepare request header. Do copy because we do some runtime tweaks here.
     reqhdr_r = reqhdr.copy()
     reqhdr_r["Referer"] = url
-
-    # construct page request
-    page_req = urllib.request.Request(url, headers=reqhdr_r)
-    # page_req = urllib.request.Request(
-    #     url, headers={"Referer": url, "User-Agent": reqhdr_r["User-Agent"],}
-    # )
 
     # open target URL
     retry = retry_count
     while retry:
         try:
-            page_resp = urllib.request.urlopen(page_req)
-            if page_resp.status == 200:
+            # resp = s.send(prepreq, timeout=10)
+            resp = s.get(url, headers=reqhdr_r, timeout=10)
+            if resp.ok:
                 break
-        except (
-            urllib.error.HTTPError,
-            urllib.error.URLError,
-            http.client.RemoteDisconnected
-        ):
+        except:
             retry -= 1
             if retry:
                 print("Retry..")
                 continue
-            else:
-                raise  # if error, raise directly to abort program.
 
     # Parse the page
-    page_html_raw = page_resp.read()
-    page_soup = BeautifulSoup(page_html_raw, "html.parser")
+    page_soup = BeautifulSoup(resp.content, "html.parser")
     page_soup.prettify()  # translate unicode string
+    # print(page_soup)
 
     return page_soup
