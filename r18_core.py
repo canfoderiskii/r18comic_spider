@@ -61,7 +61,7 @@ def request_parse_url(
     while retry:
         try:
             # resp = s.send(prepreq, timeout=10)
-            resp = s.get(url, headers=reqhdr_r, timeout=10)
+            resp = s.get(url, headers=reqhdr_r, timeout=5)
             if resp.ok:
                 break
         except:

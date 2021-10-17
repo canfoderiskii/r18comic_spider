@@ -104,7 +104,7 @@ with requests.Session() as session:  # initial session via context manager
 
         # open & parse Home page
         homepage_soup = site.comic_page_open(comic_url)
-        time.sleep(0.5)
+        time.sleep(0.2)
 
         # Find Comic Nmae
         comic_names = site.comic_names(homepage_soup)
@@ -183,7 +183,7 @@ with requests.Session() as session:  # initial session via context manager
             print("")
 
             # Request Image Content
-            print("Fetching Image from {} ..".format(img_url), end="")
+            print("Fetching Image from {} ..".format(img_url))
 
             reqhdr_r = site.reqhdr_image.copy()
             reqhdr_r["Referer"] = page_url
@@ -192,7 +192,7 @@ with requests.Session() as session:  # initial session via context manager
             retry = URL_RETRY_LIMIT
             while retry:
                 try:
-                    resp = site.s.get(img_url, headers=reqhdr_r, timeout=10)
+                    resp = site.s.get(img_url, headers=reqhdr_r, timeout=5)
                     if not resp.ok:
                         print("respond not ok, status code:{}".format(resp.status_code))
 
@@ -201,16 +201,16 @@ with requests.Session() as session:  # initial session via context manager
                         # triggerred.
                         raise Exception("ImageGet")
                 except (
-                    KeyboardInterrupt,
+                    # KeyboardInterrupt,
                     requests.exceptions.ConnectionError,
-                    Exception,
+                    requests.exceptions.ProxyError,
+                    # Exception,
                 ):
                     # if trial count still remains, continue to retry, otherwise,
                     # expetion is raised up again.
                     retry -= 1
                     if retry:
                         print("Retry..")
-                        time.sleep(1)  # wait a while
                         continue # next trial
 
             # save image file into downloader dir.
