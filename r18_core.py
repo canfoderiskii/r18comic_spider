@@ -51,6 +51,7 @@ def request_parse_url(
 
     Returns: parsed reponse HTML data.
     """
+    resp: requests.Response = None
 
     # prepare request header. Do copy because we do some runtime tweaks here.
     reqhdr_r = reqhdr.copy()
@@ -62,17 +63,22 @@ def request_parse_url(
         try:
             # resp = s.send(prepreq, timeout=10)
             resp = s.get(url, headers=reqhdr_r, timeout=5)
-            if resp.ok:
+            if resp.status_code == 200:
                 break
-        except:
+        except (
+            KeyboardInterrupt,
+            requests.exceptions.ConnectionError,
+            requests.exceptions.ProxyError,
+            requests.exceptions.SSLError,
+        ):
             retry -= 1
             if retry:
                 print("Retry..")
                 continue
+            else:
+                raise
 
     # Parse the page
     page_soup = BeautifulSoup(resp.content, "html.parser")
     page_soup.prettify()  # translate unicode string
-    # print(page_soup)
-
     return page_soup
