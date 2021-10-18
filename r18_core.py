@@ -67,6 +67,7 @@ def request_parse_url(
                 break
         except (
             KeyboardInterrupt,
+            requests.exceptions.ReadTimeout,
             requests.exceptions.ConnectionError,
             requests.exceptions.ProxyError,
             requests.exceptions.SSLError,

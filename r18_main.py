@@ -163,10 +163,11 @@ with requests.Session() as session:  # initial session via context manager
         with open(comic_localinfo_filepath, "w", encoding="utf-8") as f:
             f.write(json.dumps(comic_localinfo, sort_keys=True, indent=2))
 
+        # display comic name, after URL.
+        print("Comic Name:", comic_names[0]["name"])
+
         # Fetch all pages' URLs
         page_urls = site.comic_page_urls(comic_url, homepage_soup)
-        print("")  # new line
-
         # Select start page
         page_start_index = core.get_page_start_index(c)
 
