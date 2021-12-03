@@ -26,13 +26,13 @@ import r18_core as core
 CONFIG_OUTDIR = "download"
 
 # 默认代理设置
-PROXY = {"http": "127.0.0.1:7890", "https": "127.0.0.1:7890"}
+PROXY = {"http": "http://127.0.0.1:20000", "https": "http://127.0.0.1:20000"}
 
 # URL 访问使用的 User Agent
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
 
-TOPLOOP_RETRY_CNT = 5
-URL_RETRY_LIMIT = 20  # Retry Max Count
+TOPLOOP_RETRY_CNT = 3
+URL_RETRY_LIMIT = 3  # Retry Max Count
 IMGREQ_TIMEOUT = 15
 
 # Basic page request header
@@ -44,7 +44,7 @@ REQHDR_PAGE_BASE = {
     "Cache-Control": "max-age=0",
     "Cookie": "skipserver=38143-18924; nw=1; tagaccept=1",
     # "Cookie": "__cfduid=d0700503b82f0b4aeba97f313d0fb0fc41619918416; nw=1",
-    # "Cookie": "skipserver=36477-18910_31269-18907_30703-18907; nw=1; tagaccept=1",
+    "Cookie": "nw=1; tagaccept=1",
     "Connection": "keep-alive",
     "DNT": "1",
     "upgrade-insecure-requests": "1",
@@ -73,9 +73,9 @@ REQHDR_IMG_BASE = {
     # "Sec-Fetch-User": "?1",
     "User-Agent": USER_AGENT,
 }
-REQHDR_IMG_BASE = {
-    "User-Agent": USER_AGENT,
-}
+# REQHDR_IMG_BASE = {
+#     "User-Agent": USER_AGENT,
+# }
 
 
 def download(ssl_ctx: ssl.SSLContext) -> None:
@@ -199,6 +199,8 @@ def download(ssl_ctx: ssl.SSLContext) -> None:
 
                 reqhdr_r = site.reqhdr_image.copy()
                 reqhdr_r["Referer"] = page_url
+
+                # NOTE: comment this when spidering nhentai
                 reqhdr_r["Host"] = img_url_s[0] + "://" + img_url_s[1].split("/")[0]
 
                 # Here, use urllib instead of requests, because I always get an error
@@ -278,8 +280,9 @@ def download(ssl_ctx: ssl.SSLContext) -> None:
 
 
 if __name__ == "__main__":
-    urllib3.disable_warnings()
+    # urllib3.disable_warnings()
 
+    sslctx = None
     sslctx = ssl._create_unverified_context()
     # sslctx = ssl._create_default_https_context()
     # sslctx = ssl.create_default_context(cafile=certifi.where())
@@ -312,6 +315,7 @@ if __name__ == "__main__":
                 else:
                     sslctx = ssl._create_unverified_context()
 
+                time.sleep(1)
                 continue  # next trial
 
             raise
